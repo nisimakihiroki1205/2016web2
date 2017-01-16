@@ -29,7 +29,7 @@
       directionsService.route(request,function(response,status){
         if(status == google.maps.DirectionsStatus.OK){
           var directionsRenderer = new google.maps.DirectionsRenderer({map:map});
-        DirectionsRenderer.setDirections(response);
+        directionsRenderer.setDirections(response);
           
       var service = new google.maps.places.PlacesService(map);
       response.geocoded_waypoints.forEach(function(e){
