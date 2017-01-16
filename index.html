@@ -11,7 +11,36 @@
   <body>
     <div id="map"></div>
     <script type="text/javascript">
-      var map;
+      function initMap(){
+      var map = new google.maps.Map(document.getElementById('map'));
+      
+      //ルート検索
+      var request = {
+        origin:"東京工芸大学　厚木キャンパス",
+        destination:"市川市南行徳４－８－５",
+        travelMode:google.maps.TrafficModel.BEST_GUESS
+      },
+          }
+      var directionsService = new google.maps.DirectionsService;
+      DirectionsService.route(request,function(response,status){
+        if(status == google.maps.DirectionsStatus.OK){
+          var directionsRenderer.DirectionsRenderer({map:map});
+        DirectionsRenderer.setDirections(response);
+          
+      var service = new google.maps.places.PlacesService(map);
+      response.geocoded_waypoints.forEach(function(e){
+        service.getDetails({placeId:e.place_id},function(place,status){
+          if(status == google.maps.place.placesServiceStatus.OK){
+            var infowindow = new google.maps.InfoWindow({
+              content : place.name,
+              position : place.geometry.location,
+              pixelOffset: new google.maps.Size(0,-50),
+              map: map
+            });
+          }
+          });
+         });
+        
       function initMap() {
        geocoder =new google.maps.Geocoder();
         geocoder.geocode({
